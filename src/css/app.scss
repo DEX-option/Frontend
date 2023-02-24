@@ -1,5 +1,94 @@
 @import "./utils/reset";
 
+@font-face {
+    font-family: "Roboto";
+    src: url(../../public/fonts/Roboto.woff2) format('woff2');
+    }
+
 body {
-    background: #ccc;
+    background: #FFF;
+    font-family: "Roboto";
 }
+
+.app--header {
+    position:fixed;
+    top: 0;
+    z-index: 90;
+    width: 100%;
+    padding: 24px;
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    background: #FFF;
+    box-shadow: 1px 4px 12px #ccc;
+}
+
+
+.main--menu {
+    display: flex;
+    justify-content: space-around;
+}
+
+.logo--image {
+    width: 100px;
+}
+
+.menu--item {
+    padding: 0 32px;
+
+    a {
+        color: #c4c9cb;
+        text-transform: uppercase;
+        font-size: 24px;
+        text-decoration: none;
+    }
+}
+
+.btn {
+
+    opacity: 1;
+
+    &:hover,
+    &:focus {
+        opacity: 0.7;
+    }
+}
+
+.connect--btn {
+    padding: 8px 32px;
+    background: #c4c9cb;
+    border-radius: 40px;
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.main--content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.page {
+    width: calc(100% - 128px);
+    margin-left: auto;
+    margin-top: 120px;
+}
+
+.hero--section {
+    display: flex;
+    min-height: 400px;
+    max-width: 1260px;
+    width: calc(100% - 128px);
+    border-radius: 40px;
+    padding: 40px;
+    box-shadow: 1px 4px 12px #ccc;    
+}
+
+.hero--column {
+    width: 50%;
+}
+
+
