@@ -8,7 +8,7 @@ export const menuConfig : menuItems = [
     },
     {
         name: "scheme",
-        link: "#scheme",
+        link: "#alg",
         subMenu: []
     },
     {
