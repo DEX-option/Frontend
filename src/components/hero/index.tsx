@@ -6,7 +6,7 @@ const Hero = () => {
     return(
         <div className="hero--section">
             <div className="hero--column">
-                <img src="img/pie.png" />
+                <img className="hero--img" src="img/pie.png" />
             </div>
             <div className="hero--column">
                <div className="hero--heading">

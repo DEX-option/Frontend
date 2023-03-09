@@ -13,23 +13,11 @@ const App = () => {
                 <div className="page">
                     <Hero />
                     <a href="#alg" />
-                    <Scheme 
-                    title={siteSchemes.algorithm.title}
-                    description={siteSchemes.algorithm.description}
-                    timeline={siteSchemes.algorithm.timeline}
-                    content={siteSchemes.algorithm.content} />
+                    <Scheme content={siteSchemes.algorithm} />
                     <a href="#alg" />
-                    <Scheme 
-                    title={siteSchemes.howToEarn.title}
-                    description={siteSchemes.howToEarn.description}
-                    timeline={siteSchemes.howToEarn.timeline}
-                    content={siteSchemes.howToEarn.content} />
+                    <Scheme content={siteSchemes.howToEarn} />
                     <a href="#roadmap" />
-                    <Scheme 
-                    title={siteSchemes.roadMap.title}
-                    description={siteSchemes.roadMap.description}
-                    timeline={siteSchemes.roadMap.timeline}
-                    content={siteSchemes.roadMap.content} />
+                    <Scheme content={siteSchemes.roadMap} />
                 </div>
             </div>
         </div>

@@ -58,8 +58,8 @@ export const siteSchemes : schemes = {
             image: "img/steps/step9.png",
             imagePosition: "left"
         }, {
-            heading: "Staking PIEX",
-            description: "Part of the our token is dividing between token crators (Providers of the basic assets)",
+            heading: "Receive the main PIEX token",
+            description: "Part of the our token is dividing between option creators (Providers of the basic assets)",
             image: "img/steps/step7.png",
             imagePosition: "left"
         }, {

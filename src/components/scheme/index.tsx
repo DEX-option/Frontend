@@ -2,38 +2,29 @@ import React from 'react';
 import { infoContent, infoScheme } from '../../types'
 
 interface schemeContent {
-    title: string,
-    description: string,
-    timeline: boolean,
-    content: infoScheme
+   content: infoContent 
 }
 
 
-const Scheme: React.FC<schemeContent> = ({ 
-    title, 
-    description, 
-    timeline,
-    content }: infoContent ) => {
-
-    console.log(content)
+const Scheme = ({ content }: schemeContent ) => {
 
     return(
         <div className="scheme--section">
             <div className="scheme--heading">
                 <h2>
-                    {title}
+                    {content.title}
                 </h2>
             </div>
-            {description && <div className="scheme--description">
+            {content.description && <div className="scheme--description">
                 <h4>
-                    {description}
+                    {content.description}
                 </h4>
             </div>}
             <div className="scheme--content">
-                {content.map((stage) => {
+                {content.content.map((stage : any) => {
                     return(
                         <div className="scheme--stage">
-                          {timeline && 
+                          {content.timeline && 
                             <div className="timeline--item">
                               <img src="img/timeline_icon.png" />
                             </div>}

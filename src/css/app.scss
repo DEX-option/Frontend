@@ -98,6 +98,16 @@ body {
     width: 50%;
 }
 
+.hero--img {
+    margin-top: 15%;
+    margin-left: 15%;
+}
+
+.hero--heading {
+    text-align: center;
+    margin-top: 15%;
+}
+
 .scheme--heading,
 .scheme--description {
     width: 100%;
@@ -128,6 +138,15 @@ body {
 
 .stage--item {
     display: flex;
+}
+
+.stage--text {
+    margin-top: 100px;
+
+    .stage--heading {
+        font-size: 36px;
+        font-weight: 600;
+    }
 }
 
 

@@ -24,11 +24,11 @@ export type infoScheme = {
     description: string,
     image: string,
     imagePosition: "left" | "right"
-}[]
+}
 
 export type infoContent = {
     title: string,
     description: string,
     timeline: boolean,
-    content: infoScheme
+    content: infoScheme[]
 }
