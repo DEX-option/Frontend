@@ -1,9 +1,15 @@
 import React from 'react';
 import Menu from './menu'
-import ConnectBtn from './connectBtn';
+import { ActionBtn } from './connectBtn';
 
 
 const AppHeader = () => {
+
+    const ConnectWallet = async (event : React.MouseEvent) => {
+       event.stopPropagation()
+       console.log("Connect wallet")
+    }
+
     return(
         <header className="app--header">
               <div className="logo--section">
@@ -13,7 +19,7 @@ const AppHeader = () => {
                 <Menu />
               </div>
               <div className="connect--section">
-                <ConnectBtn />
+                <ActionBtn text="Connect wallet" onClick={ConnectWallet} />
               </div>
         </header>
     )

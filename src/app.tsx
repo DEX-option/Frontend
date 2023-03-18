@@ -4,6 +4,8 @@ import AppHeader from './components/header'
 import Hero from './components/hero'
 import Scheme from './components/scheme'
 import { siteSchemes } from './content/schemes'
+import AboutSection from './components/about';
+import Footer from './components/footer';
 
 const App = () => {
     return(
@@ -18,6 +20,8 @@ const App = () => {
                     <Scheme content={siteSchemes.howToEarn} />
                     <a href="#roadmap" />
                     <Scheme content={siteSchemes.roadMap} />
+                    <AboutSection />
+                    <Footer />
                 </div>
             </div>
         </div>

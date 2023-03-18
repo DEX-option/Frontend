@@ -21,9 +21,9 @@ const Scheme = ({ content }: schemeContent ) => {
                 </h4>
             </div>}
             <div className="scheme--content">
-                {content.content.map((stage : any) => {
+                {content.content.map((stage : any, index) => {
                     return(
-                        <div className="scheme--stage">
+                        <div className="scheme--stage" key={"st".concat(stage.image).concat(String(index*1.5))}>
                           {content.timeline && 
                             <div className="timeline--item">
                               <img src="img/timeline_icon.png" />

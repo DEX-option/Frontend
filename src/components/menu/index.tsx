@@ -5,9 +5,9 @@ const Menu = () => {
 
     return(
         <div className="main--menu">
-            {menuConfig.map((item) => {
+            {menuConfig.map((item, index) => {
                 return(
-                    <div className="menu--item">
+                    <div className="menu--item" key={"menu".concat(String(index*1.34))}>
                         <a href={item.link}>{item.name}</a>
                     </div>
                 )

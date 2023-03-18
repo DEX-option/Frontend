@@ -1,12 +1,31 @@
 import React from 'react';
 
-const ConnectBtn = () => {
+type ActionProps = {
+    onClick(e: React.MouseEvent): void,
+    text: string
+  };
+
+type LinkProps = {
+    href: string,
+    text: string
+ };
+
+export const ActionBtn = ({ text, onClick } : ActionProps ) => {
+
+
+    return(
+        <div className="btn connect--btn" onClick={onClick}>
+            {text}
+        </div>
+    )
+
+}
+
+export const LinkBtn = ({ text, href } : LinkProps ) => {
 
     return(
         <div className="btn connect--btn">
-            Connect wallet
+            <a href={href}>{text}</a>
         </div>
     )
 }
-
-export default ConnectBtn

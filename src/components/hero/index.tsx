@@ -1,5 +1,6 @@
 import React from 'react';
 import * as texts from '../../content/texts'
+import { ActionBtn, LinkBtn } from '../connectBtn';
 
 const Hero = () => {
     
@@ -14,6 +15,10 @@ const Hero = () => {
                </div>
                <div className="hero--description">
                   <p>{texts.heroDescription}</p>
+               </div>
+               <div className="hero--btn--block">
+                  <LinkBtn href="#" text="Start trading" />
+                  <LinkBtn href="#" text="Buy tokens" />
                </div>
             </div>
         </div>
