@@ -1,4 +1,4 @@
-const ERC20ABI = [
+export const ERC20ABI = [
 	{
 		"anonymous": false,
 		"inputs": [
@@ -184,7 +184,7 @@ const ERC20ABI = [
 	}
 ]
 
-const PIEXCreatorABI = [
+export const PIEXCreatorABI = [
 	{
 		"inputs": [
 			{

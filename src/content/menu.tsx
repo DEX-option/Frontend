@@ -7,17 +7,17 @@ export const menuConfig : menuItems = [
         subMenu: []
     },
     {
-        name: "scheme",
+        name: "create",
         link: "#alg",
         subMenu: []
     },
     {
-       name: "roadmap",
+       name: "exchange",
        link: "#roadmap",
        subMenu: []
     },
     {
-       name: "about",
+       name: "invest",
        link: "#about",
        subMenu: []
     }
