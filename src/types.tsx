@@ -1,3 +1,5 @@
+export type MenuTabs = "home" | "trade" | "exchange" | "invest" | "create" | "about"
+
 export type Request = {
     name: string,
     email: string,

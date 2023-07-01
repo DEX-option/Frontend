@@ -3,24 +3,34 @@ import { createReducer, createAction, combineReducers } from '@reduxjs/toolkit';
 import * as types from '../types'
 import * as config from '../config'
 
-const defaultValue: string = ""
+const account: string = ""
+const defaultTab : types.MenuTabs = "home"
 
 export const actionNames = {
-    updateDefaultValue: "UPDATE_DEFAULT_VALUE"
+    updateAccount: "UPDATE_ACCOUNT",
+    selectTab: "SELECT_TAB"
 }
 
 export const actions = {
-    UpdateDefaultValue: createAction<string>(actionNames.updateDefaultValue)
+    UpdateAccount: createAction<string>(actionNames.updateAccount),
+    SelectTab: createAction<types.MenuTabs>(actionNames.selectTab)
 }
 
-const DefaultValue = (state = defaultValue, action: any) => {
-    const newState = (action.type === actionNames.updateDefaultValue) ? 
+const SetAccount = (state = account, action: any) => {
+    const newState = (action.type === actionNames.updateAccount) ? 
+    action.payload : state
+    return newState
+}
+
+const SelectTab = (state = account, action: any) => {
+    const newState = (action.type === actionNames.selectTab) ? 
     action.payload : state
     return newState
 }
 
 export const RootReducer = combineReducers ({
-    default: DefaultValue
+    account: SetAccount,
+    tab: SelectTab
 })
 
 export type RootState = ReturnType<typeof RootReducer>
