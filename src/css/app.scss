@@ -190,6 +190,41 @@ body {
     padding-top: 160px;
 }
 
+.creation--form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    margin: 40px;
+    padding: 40px;
+    border-radius: 32px;
+    background: #c4c9cb;
+    font-size: 28px;
+    text-transform: uppercase;
+
+    input {
+        border-radius: 8px;
+        margin: 12px 0;
+        min-width: 380px;
+    }
+
+    button {
+        width: 100%;
+        margin: 18px;
+        padding: 20px 60px;
+        background: #148f35;
+        border-radius: 16px;
+        text-transform: uppercase;
+        box-shadow: 1px 4px 12px #ccc;    
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+            background: #0cdb43;
+        }
+    }
+}
+
 
 
 
