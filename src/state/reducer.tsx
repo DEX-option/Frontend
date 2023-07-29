@@ -8,13 +8,15 @@ const defaultTab : types.MenuTabs = "home"
 
 export const actionNames = {
     updateAccount: "UPDATE_ACCOUNT",
-    selectTab: "SELECT_TAB"
+    selectTab: "SELECT_TAB",
+    selectSubTab: "SELECT_SUB_TAB"
 }
 
 export const actions = {
-    UpdateAccount: createAction<string>(actionNames.updateAccount),
-    SelectTab: createAction<types.MenuTabs>(actionNames.selectTab)
-}
+  UpdateAccount: createAction<string>(actionNames.updateAccount),
+  SelectTab: createAction<types.MenuTabs>(actionNames.selectTab),
+  SelectSubTab: createAction<types.MenuTabs>(actionNames.selectSubTab),
+};
 
 const SetAccount = (state = account, action: any) => {
     const newState = (action.type === actionNames.updateAccount) ? 
@@ -28,9 +30,16 @@ const SelectTab = (state = account, action: any) => {
     return newState
 }
 
+const SelectSubTab = (state = account, action: any) => {
+  const newState =
+    action.type === actionNames.selectSubTab ? action.payload : state;
+  return newState;
+};
+
 export const RootReducer = combineReducers ({
     account: SetAccount,
-    tab: SelectTab
+    tab: SelectTab,
+    subTab: SelectSubTab
 })
 
 export type RootState = ReturnType<typeof RootReducer>
