@@ -67,12 +67,13 @@ export async function SubscribeOnAccountChanging(): Promise<account> {
   }
 
   return await new Promise((resolve) => {
-    env.on("accountsChanged", function () {
+      env.on("accountsChanged", function () {
       resolve(Auth());
     });
 
-    env.on("chainChanged", function () {
+      env.on("chainChanged", function () {
       resolve(Auth());
     });
   });
 }
+

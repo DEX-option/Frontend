@@ -4,7 +4,7 @@ import { ActionBtn } from './connectBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, actions } from '../state/reducer';
 import { WalletString } from '../utils/stringFilter';
-import { Auth } from '../blockchain/functions/auth';
+import { Auth, SubscribeOnAccountChanging } from '../blockchain/functions/auth';
 
 
 const AppHeader = () => {
@@ -25,11 +25,22 @@ const AppHeader = () => {
       }
       const account = await Auth()
 
-      if (account) dispatch(actions.UpdateAccount(account));
+      if (account) {
+        dispatch(actions.UpdateAccount(account));
+        SubscrideChanges()
+      }
   }
   
   const Disconnect = () => {
     dispatch(actions.UpdateAccount(""));
+  }
+
+  async function SubscrideChanges() {
+    const account = await SubscribeOnAccountChanging()
+          if (account) {
+            dispatch(actions.UpdateAccount(account));
+    }
+    SubscrideChanges()
   }
 
     return (
