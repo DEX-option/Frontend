@@ -63,6 +63,7 @@ body {
 
 .connect--btn {
     padding: 8px 32px;
+    margin-left: 12px;
     background: #c4c9cb;
     border-radius: 40px;
     color: #fff;
@@ -166,6 +167,10 @@ body {
 }
 
 .stage--item {
+    display: flex;
+}
+
+.connect--section {
     display: flex;
 }
 

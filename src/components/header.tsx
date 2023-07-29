@@ -1,28 +1,53 @@
 import React from 'react';
 import Menu from './menu'
 import { ActionBtn } from './connectBtn';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, actions } from '../state/reducer';
+import { WalletString } from '../utils/stringFilter';
+import { Auth } from '../blockchain/functions/auth';
 
 
 const AppHeader = () => {
 
-    const ConnectWallet = async (event : React.MouseEvent) => {
-       event.stopPropagation()
-       console.log("Connect wallet")
-    }
+  const State = useSelector((state: RootState) => {
+      return state
+  })
+  
+  const dispatch = useDispatch()
+  const btnText = State.account
+    ? WalletString(State.account)
+    : "Connect wallet";
 
-    return(
-        <header className="app--header">
-              <div className="logo--section">
-                <img className="logo--image" src="img/logo.png" />
-              </div>
-              <div className="menu--section">
-                <Menu />
-              </div>
-              <div className="connect--section">
-                <ActionBtn text="Connect wallet" onClick={ConnectWallet} />
-              </div>
-        </header>
-    )
+    const ConnectWallet = async (event : React.MouseEvent) => {
+      event.stopPropagation()
+      if (State.account) {
+        return;
+      }
+      const account = await Auth()
+
+      if (account) dispatch(actions.UpdateAccount(account));
+  }
+  
+  const Disconnect = () => {
+    dispatch(actions.UpdateAccount(""));
+  }
+
+    return (
+      <header className="app--header">
+        <div className="logo--section">
+          <img className="logo--image" src="img/logo.png" />
+        </div>
+        <div className="menu--section">
+          <Menu />
+        </div>
+        <div className="connect--section">
+          <ActionBtn text={btnText} onClick={ConnectWallet} />
+          {State.account ? (
+            <ActionBtn text="Disconnect" onClick={Disconnect} />
+          ) : null}
+        </div>
+      </header>
+    );
 }
 
 export default AppHeader

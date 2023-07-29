@@ -12,7 +12,7 @@ export function IsTrueNetwork(): boolean {
   return env.chainId === networkParams.networkHexID;
 }
 
-async function NetworkAuth(): Promise<account> {
+export async function Auth(): Promise<account> {
   if (!env) {
     // Checking mobile device
     if (
@@ -61,20 +61,18 @@ async function NetworkAuth(): Promise<account> {
   }
 }
 
-async function SubscribeOnAccountChanging(): Promise<account> {
+export async function SubscribeOnAccountChanging(): Promise<account> {
   if (!env) {
     return null;
   }
 
   return await new Promise((resolve) => {
     env.on("accountsChanged", function () {
-      resolve(NetworkAuth());
+      resolve(Auth());
     });
 
     env.on("chainChanged", function () {
-      resolve(NetworkAuth());
+      resolve(Auth());
     });
   });
 }
-
-export { NetworkAuth, SubscribeOnAccountChanging };
