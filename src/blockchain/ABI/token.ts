@@ -1,4 +1,4 @@
-export const ERC20ABIMintable = [
+export const ERC20ABIMintable : any = [
   {
     anonymous: false,
     inputs: [

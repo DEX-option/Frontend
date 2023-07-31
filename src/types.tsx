@@ -4,6 +4,14 @@ declare global {
   }
 }
 
+export type OptionInput = {
+    addressFrom: string;
+    addressTo: string;
+    amountFrom: string;
+    amountTo: string;
+    expiration: number;
+}
+
 export type MenuTabs =
   | "home"
   | "trade"
@@ -49,3 +57,4 @@ export type infoContent = {
   timeline: boolean;
   content: infoScheme[];
 };
+

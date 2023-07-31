@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useMemo, useState } from "react";
+import { IsAddressString } from "utils/stringFilter";
 
 interface CreationInput {
   tokenFrom: string;
@@ -26,9 +27,22 @@ const OptionCreationForm = () => {
 
     const FormInputHandler = (event: ChangeEvent) => {
 
-        const target = event.target as HTMLInputElement;
-        console.log(target.id);
+      const target = event.target as HTMLInputElement;
+      const val = target.value;
 
+      const newData: CreationInput = {
+        tokenFrom:
+          target.id === "tokenFrom" && IsAddressString(val)
+            ? val
+            : formData.tokenFrom,
+        tokenFor:
+          target.id === "tokenFor" && IsAddressString(val)
+            ? val
+            : formData.tokenFor,
+        price: target.id === "price" ? Number(val) : formData.price,
+        expiration: target.id === "expiration" ? val : formData.expiration
+      };
+      UpdateFormData(newData);
     }
 
     return (
@@ -66,6 +80,7 @@ const OptionCreationForm = () => {
         <div className="address--input">
           <div className="input--name">Expiration:</div>
           <input
+            id="expiration"
             type="date"
             placeholder="2024-01-01"
             value={formData.expiration}

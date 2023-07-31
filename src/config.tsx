@@ -4,6 +4,7 @@ export const env = window.ethereum
 
 export const optionContract = "0x65569e4a0c91Fc500F4B0b8387C430A150C2deFE";
 export const swapRouter = "0xCc7aDc94F3D80127849D2b41b6439b7CF1eB4Ae0";
+export const minGasPrice = 1600000000;
 export const testTokens = [
   {
     address: "0x87921cb8386219a009057c733937da278195d3e2",

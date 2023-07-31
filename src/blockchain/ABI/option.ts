@@ -1,4 +1,4 @@
-export const OptionCreatorABI = [
+export const OptionCreatorABI : any = [
   {
     anonymous: false,
     inputs: [

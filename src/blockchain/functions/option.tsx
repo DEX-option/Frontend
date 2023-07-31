@@ -1,1 +1,21 @@
-export {}
+import Web3 from "web3";
+import { env, optionContract } from "../../config";
+import { OptionInput } from "../../types";
+import { OptionCreatorABI } from "../ABI/option";
+
+const w3reader = new Web3(Web3.givenProvider);
+
+export async function CreateOption(data: OptionInput) {
+  if (!env) {
+    return null;
+  }
+
+  const w3 = new Web3(env);
+  const gs = await w3.eth.getGasPrice();
+  const contract = new w3.eth.Contract(OptionCreatorABI, optionContract);
+  
+  await contract.methods.safeMint(data.addressFrom)
+  console.log(w3);
+
+  return true;
+}
