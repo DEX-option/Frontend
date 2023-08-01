@@ -12,6 +12,13 @@ export type OptionInput = {
     expiration: number;
 }
 
+export type OptionCreationData = {
+  to: string,
+  path: string[],
+  ratio: number[],
+  expiration: number
+}
+
 export type MenuTabs =
   | "home"
   | "trade"

@@ -35,7 +35,7 @@ export async function MintTokens (account: string, address: string, amount: numb
   }
 }
 
-async function GetAllowance(
+export async function GetAllowance(
     token: string,
   owner: account,
   spender: account
@@ -50,7 +50,7 @@ async function GetAllowance(
   return Number(allowance) / 1e18;
 }
 
-async function GetBalance(token: string, owner: account): Promise<number> {
+export async function GetBalance(token: string, owner: account): Promise<number> {
   if (!owner) {
     return 0;
   }
@@ -60,7 +60,7 @@ async function GetBalance(token: string, owner: account): Promise<number> {
   return Number(balance) / 1e18;
 }
 
-async function ApprovePlasma(
+export async function ApproveToken(
     token: string,
   owner: account,
     amount: number,

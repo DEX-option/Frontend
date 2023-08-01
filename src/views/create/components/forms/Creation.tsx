@@ -42,6 +42,9 @@ const OptionCreationForm = () => {
         price: target.id === "price" ? Number(val) : formData.price,
         expiration: target.id === "expiration" ? val : formData.expiration
       };
+      if (target.id === "tokenFrom" && val.length > 12) {
+         const allowance = GetAllowance()
+      }
       UpdateFormData(newData);
     }
 
