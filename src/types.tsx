@@ -26,6 +26,11 @@ export type AllowanceRow = {
   amount: number
 }
 
+export type NFTOwnerDT = {
+  id: number,
+  owner: string
+}
+
 export type AllowanceRowAction = {
   type: string;
   payload: AllowanceRow[];

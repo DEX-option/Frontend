@@ -1,21 +1,20 @@
-import { GetAllowance } from "blockchain/functions/tokens";
+import { ApproveToken, GetAllowance } from "blockchain/functions/tokens";
 import { optionContract, testTokens } from "config";
 import React, { ChangeEvent, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import { GetCachedallowance, UpdateAllowanceCache } from "state/hooks";
 import { RootState } from "state/reducer";
 import { IsAddressString } from "utils/stringFilter";
+import { NFTOwnerDT, OptionCreationData, OptionInput } from "types";
+import { CreateOption, GetLastOptionData } from "blockchain/functions/option";
 
 interface CreationInput {
   tokenFrom: string;
   tokenFor: string;
-  price: number;
+  amountFrom: number;
+  amountTo: number;
   expiration: string;
 }
-
-type Allowances = {
-  contract: string;
-  value: number;
-}[];
 
 const GenerateDefaultDate = () => {
   var curr = new Date();
@@ -32,44 +31,16 @@ const OptionCreationForm = () => {
   const [formData, UpdateFormData] = useState<CreationInput>({
     tokenFrom: "",
     tokenFor: "",
-    price: 0,
+    amountFrom: 0,
+    amountTo: 0,
     expiration: defaultDate,
   });
   const dt = new Date();
-  const [allowanceList, updateAllowanceList] = useState<Allowances>([]);
-  const [requiredToApprove, updateRequired] = useState<number>(0)
-
-  const UpdateAllowances = (contract: string, val: number) => {
-    let isContractDefined = false;
-    let newAllowanceList: Allowances = [];
-    allowanceList.map((item) => {
-      if (item.contract === contract) {
-        newAllowanceList.push({
-          contract: contract,
-          value: val,
-        });
-        isContractDefined = true;
-      } else {
-        newAllowanceList.push(item);
-      }
-    });
-    if (!isContractDefined) {
-      newAllowanceList.push({
-        contract: contract,
-        value: val,
-      });
-    }
-    updateAllowanceList(newAllowanceList);
-  };
-
-  const GetCachedAllowance = (contract: string) => {
-    allowanceList.forEach((item) => {
-      if (item.contract === contract) {
-        return item.value;
-      }
-    });
-    return null;
-  };
+  const [requiredToApprove, updateRequired] = useState<number>(0);
+  const [creationResult, SetCreationResult] = useState<NFTOwnerDT>({
+    id: -1,
+    owner: "",
+  });
 
   const FormInputHandler = async (event: ChangeEvent) => {
     const target = event.target as HTMLInputElement;
@@ -84,32 +55,84 @@ const OptionCreationForm = () => {
         target.id === "tokenFor" && IsAddressString(val)
           ? val.toLowerCase()
           : formData.tokenFor,
-      price: target.id === "price" ? Number(val) : formData.price,
+      amountFrom:
+        target.id === "amountFrom" ? Number(val) : formData.amountFrom,
+      amountTo: target.id === "amountTo" ? Number(val) : formData.amountTo,
       expiration: target.id === "expiration" ? val : formData.expiration,
     };
-    if (target.id === "tokenFrom" && val.length > 31) {
-      console.log("Token from ...");
-      if (GetCachedAllowance(val) === null) {
-        console.log("Requesting")
-        const allowance = await GetAllowance(
-          val,
-          State.account,
-          optionContract
-        );
-        UpdateAllowances(val, allowance);
-      }
+
+    if (GetCachedallowance(val, "option") === null && formData.amountFrom > 0) {
+      const allowance = await GetAllowance(formData.tokenFrom, State.account, optionContract);
+      UpdateAllowanceCache(
+        { contract: formData.tokenFrom, amount: allowance },
+        "option"
+      );
     }
-    updateRequired(Number(formData.price) - GetCachedAllowance(formData.tokenFrom));
+
+    updateRequired(
+      Number(formData.amountFrom) -
+        GetCachedallowance(formData.tokenFrom, "option")
+    );
     UpdateFormData(newData);
+  };
+
+  const ApproveCall = async () => {
+    try {
+      await ApproveToken(
+        formData.tokenFrom,
+        State.account,
+        formData.amountFrom,
+        optionContract
+      );
+    } catch (e: any) {
+      console.log(e.message);
+      return;
+    }
+
+    const allowance = await GetAllowance(
+      formData.tokenFrom,
+      State.account,
+      optionContract
+    );
+    UpdateAllowanceCache(
+      { contract: formData.tokenFrom, amount: allowance },
+      "option"
+    );
+    const cache = GetCachedallowance(formData.tokenFrom, "option");
+    updateRequired(Number(formData.amountFrom) - cache);
   };
 
   const CreateButtonDisabled = () => {
     return formData.tokenFrom &&
       formData.tokenFor &&
-      formData.price &&
+      formData.amountFrom &&
       dt.getTime() < new Date(formData.expiration).getTime()
       ? true
       : false;
+  };
+
+  const CreateAction = async () => {
+    const dt = new Date(formData.expiration);
+    const data: OptionCreationData = {
+      to: State.account,
+      path: [formData.tokenFrom, formData.tokenFor],
+      ratio: [formData.amountFrom, formData.amountTo],
+      expiration: Math.round(dt.getTime() / 1000),
+    };
+    try {
+      await CreateOption(State.account, data);
+    } catch (e) {
+      SetCreationResult({
+        id: -1,
+        owner: "",
+      });
+      return null;
+    }
+    const optionDT = await GetLastOptionData();
+    console.log(optionDT);
+    if (optionDT.owner.toLowerCase() === State.account.toLowerCase())
+      SetCreationResult(optionDT);
+    return optionDT;
   };
 
   return (
@@ -137,12 +160,22 @@ const OptionCreationForm = () => {
             />
           </div>
           <div className="address--input">
-            <div className="input--name">Target price:</div>
+            <div className="input--name">Amount from:</div>
             <input
-              id="price"
+              id="amountFrom"
               type="number"
               placeholder="1000"
-              value={formData.price}
+              value={formData.amountFrom}
+              onChange={FormInputHandler}
+            />
+          </div>
+          <div className="address--input">
+            <div className="input--name">Amount for:</div>
+            <input
+              id="amountTo"
+              type="number"
+              placeholder="1000"
+              value={formData.amountTo}
               onChange={FormInputHandler}
             />
           </div>
@@ -158,16 +191,29 @@ const OptionCreationForm = () => {
           </div>
           <div className="address--input">
             {requiredToApprove > 0 ? (
-              <button type="button">Approve spending token</button>
+              <button type="button" onClick={ApproveCall}>
+                Approve spending token
+              </button>
             ) : (
               <button
                 type="button"
                 disabled={CreateButtonDisabled() ? false : true}
+                onClick={CreateAction}
               >
                 Create
               </button>
             )}
           </div>
+          {creationResult.id > -1 ? (
+            <div className="optionCreationResult">
+              <div className="creationRow">id: {creationResult.id}</div>
+              <div className="creationRow">contract: {optionContract}</div>
+              <div className="creationRow">owner: {creationResult.owner}</div>
+              <div className="creationRow">
+                SAVE YOUR NFT TO MWTAMASK FOR NOT TO FORGET IT
+              </div>
+            </div>
+          ) : null}
         </div>
       ) : (
         <div className="scheme--section">
