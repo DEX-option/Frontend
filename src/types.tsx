@@ -4,6 +4,8 @@ declare global {
   }
 }
 
+export type ContractsToApprove = 'option' | 'swap'
+
 export type OptionInput = {
     addressFrom: string;
     addressTo: string;
@@ -18,6 +20,16 @@ export type OptionCreationData = {
   ratio: number[],
   expiration: number
 }
+
+export type AllowanceRow = {
+  contract: string,
+  amount: number
+}
+
+export type AllowanceRowAction = {
+  type: string;
+  payload: AllowanceRow[];
+};
 
 export type MenuTabs =
   | "home"

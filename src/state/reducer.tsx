@@ -7,15 +7,23 @@ const account: string = ""
 const defaultTab : types.MenuTabs = "home"
 
 export const actionNames = {
-    updateAccount: "UPDATE_ACCOUNT",
-    selectTab: "SELECT_TAB",
-    selectSubTab: "SELECT_SUB_TAB"
-}
+  updateAccount: "UPDATE_ACCOUNT",
+  selectTab: "SELECT_TAB",
+  selectSubTab: "SELECT_SUB_TAB",
+  cacheOptionAllowance: "CACHE_ALLOWANCE_OPTION",
+  cacheSwapAllowance: "CACHE_ALLOWANCE_SWAP",
+};
 
 export const actions = {
   UpdateAccount: createAction<string>(actionNames.updateAccount),
   SelectTab: createAction<types.MenuTabs>(actionNames.selectTab),
   SelectSubTab: createAction<types.MenuTabs>(actionNames.selectSubTab),
+  CacheOptionAllowance: createAction<types.AllowanceRow[]>(
+    actionNames.cacheOptionAllowance
+  ),
+  CacheSwapAllowance: createAction<types.AllowanceRow[]>(
+    actionNames.cacheSwapAllowance
+  ),
 };
 
 const SetAccount = (state = account, action: any) => {
@@ -36,10 +44,27 @@ const SelectSubTab = (state = account, action: any) => {
   return newState;
 };
 
-export const RootReducer = combineReducers ({
-    account: SetAccount,
-    tab: SelectTab,
-    subTab: SelectSubTab
-})
+const CacheAllowanceOption = (state: types.AllowanceRow[] = [], action: types.AllowanceRowAction) => {
+  const newState =
+    action.type === actionNames.cacheOptionAllowance ? action.payload : state;
+  return newState;
+}
+
+const CacheAllowanceSwap = (
+  state: types.AllowanceRow[] = [],
+  action: types.AllowanceRowAction
+) => {
+  const newState =
+    action.type === actionNames.cacheSwapAllowance ? action.payload : state;
+  return newState;
+};
+
+export const RootReducer = combineReducers({
+  account: SetAccount,
+  tab: SelectTab,
+  subTab: SelectSubTab,
+  optionAllowance: CacheAllowanceOption,
+  swapAllowance: CacheAllowanceSwap,
+});
 
 export type RootState = ReturnType<typeof RootReducer>

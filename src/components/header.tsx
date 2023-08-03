@@ -27,7 +27,7 @@ const AppHeader = () => {
 
       if (account) {
         dispatch(actions.UpdateAccount(account));
-        SubscrideChanges()
+        SubscribeChanges()
       }
   }
   
@@ -35,12 +35,12 @@ const AppHeader = () => {
     dispatch(actions.UpdateAccount(""));
   }
 
-  async function SubscrideChanges() {
+  async function SubscribeChanges() {
     const account = await SubscribeOnAccountChanging()
           if (account) {
             dispatch(actions.UpdateAccount(account));
     }
-    SubscrideChanges()
+    SubscribeChanges()
   }
 
     return (

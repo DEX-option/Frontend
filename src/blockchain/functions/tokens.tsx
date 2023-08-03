@@ -46,8 +46,14 @@ export async function GetAllowance(
 
   const w3 = new reader.eth.Contract(ERC20ABIMintable, token);
   const allowance = await w3.methods.allowance(owner, spender).call();
+    let decimals = 18;
+    try {
+      decimals = await w3.methods.decimals().call();
+    } catch (e: any) {
+      console.log(e.message);
+    }
 
-  return Number(allowance) / 1e18;
+  return Number(allowance) / (10 ^ decimals);
 }
 
 export async function GetBalance(token: string, owner: account): Promise<number> {
@@ -57,7 +63,13 @@ export async function GetBalance(token: string, owner: account): Promise<number>
 
   const w3 = new reader.eth.Contract(ERC20ABIMintable, token);
   const balance = await w3.methods.balanceOf(owner).call();
-  return Number(balance) / 1e18;
+  let decimals = 18
+  try {
+    decimals = await w3.methods.decimals().call()
+  } catch (e : any) {
+    console.log(e.message)
+  }
+  return Number(balance) / (10^decimals);
 }
 
 export async function ApproveToken(
