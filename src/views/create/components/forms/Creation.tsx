@@ -139,6 +139,10 @@ const OptionCreationForm = () => {
     <>
       {State.account ? (
         <div className="creation--form">
+          <div className="formHint">
+            USDP address : {testTokens[1].address} <br />
+            ETHP address : {testTokens[0].address}
+          </div>
           <div className="address--input">
             <div className="input--name">Suggest it:</div>
             <input

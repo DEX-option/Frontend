@@ -68,3 +68,39 @@ export async function GetLastOptionData() : Promise<NFTOwnerDT> {
     owner
   })
 }
+
+export async function CheckOptionExecuted (optionId: number): Promise<boolean> {
+     const contract = new w3reader.eth.Contract(
+       OptionCreatorABI,
+       optionContract
+  );
+  try {
+    const value = await contract.methods.IsOptionExpired(optionId).call();
+    return Boolean(value)
+  } catch (e : any) {
+    console.log(e.message)
+    return true
+  }
+}
+
+export async function CheckOptionOwner (optionId: number): Promise<string> {
+  const contract = new w3reader.eth.Contract(OptionCreatorABI, optionContract);
+  try {
+      const value = await contract.methods.ownerOf(optionId).call();
+      return value;
+  } catch (e: any) {
+    console.log(e.message);
+    return "";
+  }
+}
+
+export async function GetOptionData(optionId: number): Promise<any> {
+  const contract = new w3reader.eth.Contract(OptionCreatorABI, optionContract);
+  try {
+    const value = await contract.methods.GetOptionData(optionId).call();
+    return value;
+  } catch (e: any) {
+    console.log(e.message);
+    return null;
+  }
+}

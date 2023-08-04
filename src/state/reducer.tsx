@@ -4,6 +4,7 @@ import * as types from '../types'
 import * as config from '../config'
 
 const account: string = ""
+const defaultSubTab : types.MenuTabs = "create"
 const defaultTab : types.MenuTabs = "home"
 
 export const actionNames = {
@@ -38,7 +39,7 @@ const SelectTab = (state = account, action: any) => {
     return newState
 }
 
-const SelectSubTab = (state = account, action: any) => {
+const SelectSubTab = (state = defaultSubTab, action: any) => {
   const newState =
     action.type === actionNames.selectSubTab ? action.payload : state;
   return newState;

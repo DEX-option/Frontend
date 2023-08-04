@@ -4,6 +4,9 @@ const OptionWithdrawForm = () => {
 
     return (
       <div className="creation--form">
+        <div className="formHint">
+          May be done by creator only. Option must be expired or executed.
+        </div>
         <div className="address--input">
           <div className="input--name">Option NFT id:</div>
           <input type="text" placeholder="0x" />
