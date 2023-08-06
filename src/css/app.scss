@@ -272,6 +272,25 @@ body {
     padding: 24px;
 }
 
+.footerHeading {
+   padding: 16px;
+   
+   h4 {
+     font-size: 24px;
+     font-weight: 700;
+   }
+}
+
+.socialBlock {
+    padding: 16px;
+    display: flex;
+
+    .socialItem {
+        margin-right: 12px;
+    }
+
+}
+
 
 
 
