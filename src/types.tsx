@@ -82,3 +82,12 @@ export type infoContent = {
   content: infoScheme[];
 };
 
+export type OptionData = {
+  balances: string[],
+  path: string[],
+  ratio: string[],
+  creation: number,
+  expiration: number;
+  creator: string
+}
+

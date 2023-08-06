@@ -100,3 +100,9 @@ export async function ApproveToken(
 
   return GetAllowance(token, owner, spender);
 }
+
+export async function GetDecimals(token: string) {
+  const w3 = new reader.eth.Contract(ERC20ABIMintable, token);
+  const decs = await w3.methods.decimals().call();
+  return Number(decs);
+}
