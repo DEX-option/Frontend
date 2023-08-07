@@ -40,6 +40,7 @@ export type MenuTabs =
   | "home"
   | "trade"
   | "exchange"
+  | "faucet"
   | "invest"
   | "create"
   | "about"

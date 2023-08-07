@@ -23,6 +23,9 @@ const TabSubMenu = () => {
       case "withdraw":
         tab = "withdraw";
         break;
+      case "faucet":
+        tab = "faucet";
+        break;
     }
     dispatch(actions.SelectSubTab(tab));
   };
@@ -50,6 +53,13 @@ const TabSubMenu = () => {
       >
         <div className="tab--text" data-tab="withdraw" onClick={SelectTab}>
           Withdraw
+        </div>
+      </div>
+      <div
+        className={`tab--menu--item${ActiveTab === "execute" ? " active" : ""}`}
+      >
+        <div className="tab--text" data-tab="faucet" onClick={SelectTab}>
+          Faucet
         </div>
       </div>
     </div>

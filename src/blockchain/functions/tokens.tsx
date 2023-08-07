@@ -18,11 +18,19 @@ export async function MintTokens (account: string, address: string, amount: numb
 
   const GasPrice = await web3.eth.getGasPrice();
 
+
   try {
-      const contract = new web3.eth.Contract(ERC20ABIMintable, address);
-      const sending = String(BigInt(amount * 1e18));
+    const contract = new web3.eth.Contract(ERC20ABIMintable, address);
+      let decimals = 18;
+      try {
+        decimals = await contract.methods.decimals().call();
+      } catch (e: any) {
+        console.log(e.message);
+    }
+    
+      const sending = String(BigInt(amount * (10 ** decimals)));
                   await contract.methods
-                    .Mint(String(BigInt(amount * 1e18)), account)
+                    .Mint(String(BigInt(amount * (10 ** decimals))), account)
                     .send({
                       from: account,
                       gasPrice:
